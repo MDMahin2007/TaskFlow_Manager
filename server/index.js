@@ -57,7 +57,7 @@ mongoose
   .then(() => {
     console.log("MongoDB connected successfully");
     app.listen(PORT, () => {
-      console.log(`TaskFlow Server running on http://localhost:${PORT}`);
+      console.log(`TaskFlow Server running on mahin`);
     });
   })
   .catch((err) => {
