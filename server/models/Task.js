@@ -1,21 +1,48 @@
 const mongoose = require("mongoose");
 
-const taskSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: [true, "Task title is required"],
-    trim: true,
-    minlength: [1, "Task title cannot be empty"],
+const taskSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Task title is required"],
+      trim: true,
+      minlength: [1, "Task title cannot be empty"],
+      maxlength: [150, "Task title cannot exceed 150 characters"],
+    },
+    status: {
+      type: String,
+      enum: {
+        values: ["pending", "completed"],
+        message: "{VALUE} is not a valid status",
+      },
+      default: "pending",
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      index: true,
+    },
   },
-  status: {
-    type: String,
-    enum: ["pending", "completed"],
-    default: "pending",
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: false,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        ret.id = ret._id.toString();
+        delete ret.__v;
+        return ret;
+      },
+    },
+    toObject: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        ret.id = ret._id.toString();
+        delete ret.__v;
+        return ret;
+      },
+    },
+  }
+);
 
 module.exports = mongoose.model("Task", taskSchema);
+
