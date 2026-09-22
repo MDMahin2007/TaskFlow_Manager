@@ -11,7 +11,7 @@ const MONGO_URI =
   process.env.MONGODB_URI ||
   "mongodb://127.0.0.1:27017/taskflow";
 
-const clientOrigin = (process.env.CLIENT_ORIGIN || "http://localhost:5173").trim();
+const clientOrigin = (process.env.CLIENT_ORIGIN || "https://task-flow-manager-ten.vercel.app/").trim();
 
 // Middleware
 app.use(cors({ origin: clientOrigin || "*" }));
